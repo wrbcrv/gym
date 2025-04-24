@@ -1,0 +1,62 @@
+## Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]ogs/
+*.log
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## OS generated files
+.DS_Store
+Thumbs.db
+
+## Rider
+.idea/
+
+## Visual Studio Code
+.vscode/
+*.code-workspace
+
+## ASP.NET Publish folder
+wwwroot/
+publish/
+*.Publish.xml
+*.pubxml
+
+## NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Entity Framework Migrations (if using SQLite or temp dbs)
+*.db
+*.sqlite
+
+## Secrets (não salve arquivos com secrets reais no repositório)
+secrets.json
+
+## JetBrains Rider
+.idea/
+*.sln.iml
+
+## Others
+.env
+.env.*
+*.bak
+*.tmp
+*.tmp.*
+
+# Optional: exclude tests results or coverage reports
+TestResults/
+coverage/
+coverage.cobertura.xml
