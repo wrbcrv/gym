@@ -1,0 +1,81 @@
+<div class="h-screen overflow-y-auto scrollbar-hide flex flex-col" (scroll)="onScroll($event)">
+  <div class="shadow-md p-4">
+    <div class="relative h-32 overflow-visible">
+      <div class="absolute inset-0 bg-indigo-900 rounded-2xl"></div>
+      <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+        <div class="w-20 h-20 bg-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">{{ group?.name?.charAt(0).toUpperCase() }}</div>
+      </div>
+    </div>
+    <div class="mt-14 pb-4 px-4">
+      <h2 class="text-xl font-bold text-white text-center">{{ group?.name }}</h2>
+      <div class="text-xs text-gray-500 text-center">
+        <div class="flex justify-center mt-2 cursor-pointer">
+          @for (member of group?.members?.slice(0, 3); track $index) {
+            <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs font-medium border-2 border-black" [style.margin-left]="$index > 0 ? '-12px' : '0'">{{ member.fullName.charAt(0).toUpperCase() }}</div>
+          }
+          @if (group?.members?.length > 3) {
+            <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-white text-xs font-medium border-2 border-black -ml-2">+{{ group.members.length - 3 }}</div>
+          }
+        </div>
+      </div>
+    </div>
+    <app-ranking [groupId]="groupId"/>
+  </div>
+  <div class="flex-grow p-4 pt-0">
+    <h3 class="text-white font-medium mb-4 text-center">Atividades</h3>
+    <div class="space-y-6">
+      @if (groups.length === 0) {
+        <div class="text-center text-gray-400 ">Nenhuma atividade encontrada.</div>
+      } 
+      @for (group of groups; track group.date) {
+        <div class="mb-2">
+          <h4 class="text-indigo-400 font-medium text-xs mb-2 text-center">{{ group.displayDate }}</h4>
+          <div class="space-y-3">
+            @for (activity of group.activities; track activity.id) {
+              <div routerLink="/group/{{ groupId }}/activity/{{ activity.id }}" class="rounded-2xl p-3 bg-gray-900 hover:border-indigo-400 transition duration-300 cursor-pointer">
+                <div class="flex items-center">
+                  <div class="min-w-12 h-12 bg-indigo-500 rounded-full mr-3 flex items-center justify-center text-white text-md font-medium"></div>
+                  <div class="w-full">
+                    <div class="flex justify-between"><h4 class="text-white font-medium">{{ activity.title }}</h4></div>
+                    <div class="flex items-center justify-between">
+                      <p class="text-gray-400 text-sm">{{ activity.userFullName }}</p>
+                      <span class="text-gray-400 text-xs">{{ activity.startTime }}</span>
+                    </div>
+                  </div>
+                </div>  
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+    @if (loading) {
+      <div class="py-4">
+        <div class="space-y-3">
+          @for (item of skeletonItems; track $index) {
+            <div class="rounded-2xl p-3 bg-gray-900 animate-pulse">
+              <div class="flex items-center">
+                <div class="min-w-12 h-12 bg-gray-800 rounded-full mr-3"></div>
+                <div class="w-full">
+                  <div class="h-4 bg-gray-800 rounded-full w-[192px] mb-2"></div>
+                  <div class="flex items-center justify-between">
+                    <div class="h-3 bg-gray-800 rounded-full w-[128px]"></div>
+                    <div class="h-3 bg-gray-800 rounded-full w-[32px]"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+  <div class="absolute bottom-4 right-4 z-50 flex flex-col space-y-3">
+    <div class="w-12 h-12 bg-indigo-500 hover:bg-indigo-600 rounded-full flex items-center justify-center text-white cursor-pointer shadow-lg">
+      <i class="fa-solid fa-comments text-lg"></i>
+    </div>
+    <div class="w-12 h-12 bg-indigo-500 hover:bg-indigo-600 rounded-full flex items-center justify-center text-white cursor-pointer shadow-lg">
+      <i class="fa-solid fa-plus text-lg"></i>
+    </div>
+  </div>
+</div>

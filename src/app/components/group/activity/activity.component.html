@@ -1,0 +1,41 @@
+<div class="h-screen bg-black text-white overflow-y-auto flex flex-col">
+  <div class="flex-1 p-4 overflow-y-auto scrollbar-hide">
+    <div class="shadow-md">
+      <div class="flex items-center mb-3">
+        <div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center text-white text-md font-bold mr-3">
+          {{ activity?.userFullName?.charAt(0).toUpperCase() }}
+        </div>
+        <div>
+          <p class="text-white font-medium">{{ activity?.userFullName }}</p>
+          <p class="text-gray-400 text-xs">{{ displayDate }} {{ activity?.startTime }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-full aspect-[3/4] rounded-2xl bg-gray-800 relative mb-3 mx-auto">
+      <div class="absolute inset-0 flex items-center justify-center"></div>
+    </div>
+    <div class="text-sm mb-6">{{ activity.description }}</div>
+    <div class="space-y-6">
+      <div *ngFor="let comment of activity.comments" class="flex items-start">
+        <div class="min-w-10 h-10 flex items-center">
+          <div class="min-w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-white text-sm font-bold">{{ comment.userFullName.charAt(0).toUpperCase() }}</div>
+        </div>
+        <div>
+          <p class="text-white text-sm font-medium">{{ comment.userFullName }}</p>
+          <p class="text-gray-300 text-sm">{{ comment.content }}</p>
+        </div>
+      </div>
+      <div *ngIf="!activity.comments?.length" class="text-gray-500 text-sm text-center mt-6">Nenhum comentário ainda.</div>
+    </div>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 bg-black p-3">
+    <div class="flex items-center">
+      <input 
+        type="text" 
+        placeholder="Adicione um comentário..." 
+        class="flex-1 text-sm bg-neutral-900 placeholder-neutral-400 text-white rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      >
+      <button class="ml-2 bg-indigo-600 rounded-full w-[36px] h-[36px] flex items-center justify-center cursor-pointer"><i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+</div>
