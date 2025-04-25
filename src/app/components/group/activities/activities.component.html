@@ -1,12 +1,27 @@
 <div class="h-screen overflow-y-auto scrollbar-hide flex flex-col" (scroll)="onScroll($event)">
-  <div class="shadow-md p-4">
-    <div class="relative h-32 overflow-visible">
-      <div class="absolute inset-0 bg-indigo-900 rounded-2xl"></div>
+  <div class="shadow-md p-4 relative">
+    <div class="absolute top-0 left-0 right-0 h-64 z-0" 
+      [style.background-image]="thumbnailUrl ? 'url(' + thumbnailUrl + ')' : ''"
+      [style.background-size]="'cover'"
+      [style.background-position]="'center'">
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/60 backdrop-blur-md"></div>
+    </div>
+    <div class="relative h-32 overflow-visible z-10">
+      @if (thumbnailUrl) {
+        <div class="absolute inset-0 rounded-2xl overflow-hidden">
+          <img [src]="thumbnailUrl" alt="Group thumbnail" class="w-full h-full object-cover">
+        </div>
+      } 
+      @else {
+        <div class="absolute inset-0 bg-indigo-900 rounded-2xl"></div>
+      }
       <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-        <div class="w-20 h-20 bg-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">{{ group?.name?.charAt(0).toUpperCase() }}</div>
+        <div class="w-20 h-20 bg-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg">
+          {{ group?.name?.charAt(0).toUpperCase() }}
+        </div>
       </div>
     </div>
-    <div class="mt-14 pb-4 px-4">
+    <div class="mt-14 pb-4 px-4 relative z-10">
       <h2 class="text-xl font-bold text-white text-center">{{ group?.name }}</h2>
       <div class="text-xs text-gray-500 text-center">
         <div class="flex justify-center mt-2 cursor-pointer">
@@ -19,7 +34,7 @@
         </div>
       </div>
     </div>
-    <app-ranking [groupId]="groupId"/>
+    <app-ranking [groupId]="groupId" class="relative z-10"/>
   </div>
   <div class="flex-grow p-4 pt-0">
     <h3 class="text-white font-medium mb-4 text-center">Atividades</h3>

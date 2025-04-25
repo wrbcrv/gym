@@ -1,88 +1,94 @@
-<div class="border rounded-2xl">
-  <div class="flex flex-col items-center cursor-pointer" (click)="toggleRankingVisibility()">
-    <h3 class="text-white font-medium">Ranking</h3>
-    <div class="text-white text-xs mt-1">
-      <i class="fa-solid" [ngClass]="{ 'fa-chevron-down': !isRankingVisible, 'fa-chevron-up': isRankingVisible }"></i>
+  <div class="border rounded-2xl">
+    <div class="flex flex-col items-center cursor-pointer" (click)="toggleRankingVisibility()">
+      <h3 class="text-white font-medium">Ranking</h3>
+      <div class="text-white text-xs mt-1">
+        <i class="fa-solid" [ngClass]="{ 'fa-chevron-down': !isRankingVisible, 'fa-chevron-up': isRankingVisible }"></i>
+      </div>
+    </div>
+    <div
+      class="overflow-hidden transition-all duration-300"
+      [ngClass]="{ 'h-0': !isRankingVisible, 'h-auto': isRankingVisible }"
+    >
+    @if (isRankingVisible) {
+      <div class="p-3">
+        @for (user of userActivityCounts; track $index) {
+          <div>
+            @if ($index < 3) {
+              <div class="flex items-center mb-4">
+                <div class="flex-shrink-0 mr-3">
+                  <div class="relative">
+                    <div
+                      class="w-12 h-12 rounded-full flex items-center justify-center border-2"
+                      [ngClass]="{
+                        'bg-indigo-500 border-indigo-400': $index === 0,
+                        'bg-gray-600 border-gray-500': $index === 1,
+                        'bg-yellow-700 border-yellow-600': $index === 2
+                      }"
+                    >
+                      <span class="text-white text-lg font-bold">
+                        {{
+                          user.userId && displayName(user.userId, user.fullName)
+                            ? displayName(user.userId, user.fullName).charAt(0).toUpperCase()
+                            : '?'
+                        }}
+                      </span>
+                    </div>
+                    <div
+                      class="absolute -bottom-1 -right-1 rounded-full w-6 h-6 flex items-center justify-center border"
+                      [ngClass]="{
+                        'bg-yellow-400 border-yellow-500 text-gray-900': $index === 0,
+                        'bg-gray-300 border-gray-400 text-gray-900': $index === 1,
+                        'bg-yellow-700 border-yellow-800 text-yellow-100': $index === 2
+                      }"
+                    >
+                      <span class="text-xs font-bold">{{ $index + 1 }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between mb-1">
+                    <span
+                      class="text-sm font-medium"
+                      [ngClass]="{
+                        'text-white': $index === 0,
+                        'text-gray-300': $index === 1,
+                        'text-gray-400': $index === 2
+                      }"
+                    >
+                      {{
+                        user.userId && displayName(user.userId, user.fullName)
+                          ? displayName(user.userId, user.fullName)
+                          : 'Usuário'
+                      }}
+                    </span>
+                    <span
+                      class="text-sm font-medium"
+                      [ngClass]="{
+                        'text-white': $index === 0,
+                        'text-gray-300': $index === 1,
+                        'text-gray-400': $index === 2
+                      }"
+                    >
+                      {{ user.count || 0 }} atividades
+                    </span>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded-full h-2">
+                    <div
+                      class="h-2 rounded-full"
+                      [ngClass]="{
+                        'bg-indigo-500': $index === 0,
+                        'bg-gray-400': $index === 1,
+                        'bg-yellow-700': $index === 2
+                      }"
+                      [style.width]="((user.count / getMaxCount()) * 100) + '%'"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
     </div>
   </div>
-  <div
-    class="overflow-hidden transition-all duration-300"
-    [ngClass]="{ 'h-0': !isRankingVisible, 'h-auto': isRankingVisible }"
-  >
-    <div class="p-3" *ngIf="isRankingVisible">
-      <ng-container *ngFor="let user of userActivityCounts; let i = index">
-        <div class="flex items-center mb-4" *ngIf="i < 3">
-          <div class="flex-shrink-0 mr-3">
-            <div class="relative">
-              <div
-                class="w-12 h-12 rounded-full flex items-center justify-center border-2"
-                [ngClass]="{
-                  'bg-indigo-500 border-indigo-400': i === 0,
-                  'bg-gray-600 border-gray-500': i === 1,
-                  'bg-yellow-700 border-yellow-600': i === 2
-                }"
-              >
-                <span class="text-white text-lg font-bold">
-                  {{
-                    user.userId && displayName(user.userId, user.fullName)
-                      ? displayName(user.userId, user.fullName).charAt(0).toUpperCase()
-                      : '?'
-                  }}
-                </span>
-              </div>
-              <div
-                class="absolute -bottom-1 -right-1 rounded-full w-6 h-6 flex items-center justify-center border"
-                [ngClass]="{
-                  'bg-yellow-400 border-yellow-500 text-gray-900': i === 0,
-                  'bg-gray-300 border-gray-400 text-gray-900': i === 1,
-                  'bg-yellow-700 border-yellow-800 text-yellow-100': i === 2
-                }"
-              >
-                <span class="text-xs font-bold">{{ i + 1 }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="flex-grow">
-            <div class="flex justify-between mb-1">
-              <span
-                class="text-sm font-medium"
-                [ngClass]="{
-                  'text-white': i === 0,
-                  'text-gray-300': i === 1,
-                  'text-gray-400': i === 2
-                }"
-              >
-                {{
-                  user.userId && displayName(user.userId, user.fullName)
-                    ? displayName(user.userId, user.fullName)
-                    : 'Usuário'
-                }}
-              </span>
-              <span
-                class="text-sm font-medium"
-                [ngClass]="{
-                  'text-white': i === 0,
-                  'text-gray-300': i === 1,
-                  'text-gray-400': i === 2
-                }"
-              >
-                {{ user.count || 0 }} atividades
-              </span>
-            </div>
-            <div class="w-full bg-gray-700 rounded-full h-2">
-              <div
-                class="h-2 rounded-full"
-                [ngClass]="{
-                  'bg-indigo-500': i === 0,
-                  'bg-gray-400': i === 1,
-                  'bg-yellow-700': i === 2
-                }"
-                [style.width]="((user.count / getMaxCount()) * 100) + '%'"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-    </div>
-  </div>
-</div>

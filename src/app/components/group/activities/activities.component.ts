@@ -33,6 +33,8 @@ export class ActivitesComponent implements OnInit {
   hasMore: boolean = true;
   skeletonItems = Array(8).fill(0).map((_, i) => i);
 
+  thumbnailUrl: string = 'https://images7.alphacoders.com/133/1330715.png'
+
   constructor(
     private route: ActivatedRoute,
     private activityService: ActivityService,
