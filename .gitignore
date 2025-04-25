@@ -38,10 +38,6 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 
-## Entity Framework Migrations (if using SQLite or temp dbs)
-*.db
-*.sqlite
-
 ## Secrets (não salve arquivos com secrets reais no repositório)
 secrets.json
 
